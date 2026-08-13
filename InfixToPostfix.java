@@ -8,7 +8,11 @@ public class InfixToPostfix extends Tokenizer {
 
         for (String tok : Tokenized) {
 
-            if (isNumeric(tok)) {
+            String check="";
+            char tk=tok.charAt(0);
+            check+=tk;
+
+            if (isOperand(check)) {
                 PostfixList.add(tok);
 
             } else if (tok.equals("(")) {
@@ -39,11 +43,6 @@ public class InfixToPostfix extends Tokenizer {
         }
 
         return PostfixList;
-    }
-
-    
-    private boolean isNumeric(String tok) {
-        return tok.matches("[0-9]+");
     }
 }
     
