@@ -7,12 +7,14 @@ public class CalPostfix extends InfixToPostfix {
 
         ArrayList<Double> stack = new ArrayList<>();
 
+
+        System.out.println();
         for (String Cal : PostfixList) {
 
             String check="";
             char tk=Cal.charAt(0);
             check+=tk;
-
+            
             if (isOperand(check)) {
                 System.out.println("PUSH " + Cal);
                 stack.add(Double.parseDouble(Cal));
