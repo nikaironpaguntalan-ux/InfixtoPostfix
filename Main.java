@@ -10,6 +10,7 @@ public class Main {
         infixToPostfix.Tokenize(input);
         infixToPostfix.convert();
 
+        System.out.println();
         System.out.println("Tokenized Expression: " + infixToPostfix.PostfixList);
         System.out.println("Results: " + calPostfix.CalPostfix(infixToPostfix.PostfixList));
     }
