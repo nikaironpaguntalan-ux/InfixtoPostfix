@@ -15,7 +15,7 @@ public class CalPostfix extends InfixToPostfix {
             char tk=Cal.charAt(0);
             check+=tk;
             
-            if (isOperand(check)) {
+            if (isOperand(Cal)) {
                 System.out.println("PUSH " + Cal);
                 stack.add(Double.parseDouble(Cal));
             } else{

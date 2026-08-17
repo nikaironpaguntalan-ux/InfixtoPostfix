@@ -8,32 +8,31 @@ public class Tokenizer extends Parent {
         for (int i = 0; i < usrInput.length(); i++) {
             char c = usrInput.charAt(i);
             String current = String.valueOf(c);
-
-            if (Character.isDigit(c)) {
+            if (c == '-' &&
+                    (i == 0 || isOperator(String.valueOf(usrInput.charAt(i - 1))))) {
                 storeOperand += current;
             } else if (isOperator(current)) {
-
                 if (!storeOperand.isEmpty()) {
                     OperandList.add(storeOperand);
-                    Tokenized.add(storeOperand);   
+                    Tokenized.add(storeOperand);
                     storeOperand = "";
                 }
-
-                    OperatorList.add(current);
-                Tokenized.add(current);           
+                OperatorList.add(current);
+                Tokenized.add(current);
+            } else if (Character.isDigit(c) || c == '.') {
+                storeOperand += current;
             } else {
-                System.out.println("Invalid input");
+                System.out.println("Invalid character");
             }
         }
-
         if (!storeOperand.isEmpty()) {
             OperandList.add(storeOperand);
-            Tokenized.add(storeOperand);         
+            Tokenized.add(storeOperand);
         }
     }
 
     public static boolean isOperator(String input) {
-        String[] operators = {"+", "-", "*", "/", "^", "(", ")"};
+        String[] operators = { "+", "-", "*", "/", "^", "(", ")" };
         for (String op : operators) {
             if (op.equals(input)) {
                 return true;
@@ -43,12 +42,31 @@ public class Tokenizer extends Parent {
     }
 
     public static boolean isOperand(String input) {
-        String[] operands = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        for (String op : operands) {
-            if (op.equals(input)) {
-                return true;
+
+        int decimalCount = 0;
+
+        for (int i = 0; i < input.length(); i++) {
+
+            char c = input.charAt(i);
+
+            if (c == '-' && i == 0) {
+                continue;
+            }
+
+            if (c == '.') {
+
+                decimalCount++;
+
+                if (decimalCount > 1) {
+                    return false;
+                }
+
+            } else if (!Character.isDigit(c)) {
+
+                return false;
             }
         }
-        return false;
+
+        return true;
     }
 }

@@ -2,7 +2,7 @@ public class InputValidation extends Tokenizer {
 
     public  boolean withSpace(String input){
         if (input.contains(" ")) {
-            System.out.println("Invalid input. Please enter a valid infix expression without spaces.");
+    
             return true;
         }
         return false;
@@ -11,8 +11,7 @@ public class InputValidation extends Tokenizer {
     public boolean invalidChars(String input){
         for (char c : input.toCharArray()) {
             if (!isOperand(Character.toString(c)) && !isOperator(Character.toString(c)) && c != '(' && c != ')') {
-                System.out.println("Invalid input. Please enter a valid infix expression with only digits, operators, and parentheses.");
-                return true;
+               
             }
         }
         return false;
@@ -24,7 +23,6 @@ public class InputValidation extends Tokenizer {
 
     public boolean emptyParentheses(String input){
         if (input.contains("()")) {
-            System.out.println("Invalid input. Please enter a valid infix expression without empty parentheses.");
             return true;
         }
         return false;
@@ -32,24 +30,23 @@ public class InputValidation extends Tokenizer {
 
     public boolean doubleOperator(String input){
         if (input.contains("++") || input.contains("--") || input.contains("**") || input.contains("//") || input.contains("^^")) {
-            System.out.println("Invalid input. Please enter a valid infix expression without consecutive operators.");
             return true;
         }
         return false;
     }
 
     public boolean UnclosedParentheses(String input){
-        int OpenParenthesesCount = 0;
-        int CloseParenthesesCount = 0;
+        int OPC = 0;
+        int CPC = 0;
         for (char c : input.toCharArray()) {
             if (c == '(') {
-                OpenParenthesesCount++;
+                OPC++;
             } else if (c == ')') {
-                CloseParenthesesCount++;
+                CPC++;
             }
         }
-        if (OpenParenthesesCount != CloseParenthesesCount) {
-            System.out.println("Invalid input. Please enter a valid infix expression with balanced parentheses.");
+        if (OPC != CPC) {
+         
             return true;
         }
         return false;
@@ -62,7 +59,7 @@ public class InputValidation extends Tokenizer {
                 return false;
             }
         }
-        System.out.println("Invalid input. Please enter a valid infix expression with at least one operator.");
+      
         return true;
     }
 
@@ -73,16 +70,15 @@ public class InputValidation extends Tokenizer {
                 return false;
             }
         }
-        System.out.println("Invalid input. Please enter a valid infix expression with at least one operand.");
+      
         return true;
     }
 
     public boolean OperatorBeforeandAfterParentheses(String input){
-        if (input.contains("()") || input.contains("(+") || input.contains("(-")|| input.contains("(*") 
+        if (input.contains("()") || input.contains("(+") || input.contains("(*") 
         ||input.contains("(/") || input.contains("(^") || input.contains("+)") 
         || input.contains("-)") || input.contains("*)") || input.contains("/)") || input.contains("^)")) {
-            System.out.println("Invalid input. Please enter a valid infix expression with an operator before parentheses.");
-            return true;
+            
         }
         return false;
 
@@ -96,7 +92,6 @@ public class InputValidation extends Tokenizer {
             char before = input.charAt(i - 1);
 
             if (Character.isDigit(before) || before == ')') {
-                System.out.println("Invalid input. Operator required before '('");
                 return true;
             }
         }
@@ -105,7 +100,6 @@ public class InputValidation extends Tokenizer {
             char after = input.charAt(i + 1);
 
             if (Character.isDigit(after) || after == '(') {
-                System.out.println("Invalid input. Operator required after ')'");
                 return true;
             }
         }
@@ -118,7 +112,7 @@ public class InputValidation extends Tokenizer {
     public boolean DivisionByZero(String input) {
         for (int i = 0; i < input.length() - 1; i++) {
             if (input.charAt(i) == '/' && input.charAt(i + 1) == '0') {
-                System.out.println("Invalid input. Division by zero is not allowed.");
+              
                 return true;
             }
         }
@@ -129,7 +123,7 @@ public class InputValidation extends Tokenizer {
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (c == '+' || c == '*' || c == '/' || c == '^') {
-                System.out.println("Invalid input. Expression cannot start with an operator.");
+                
                 return true;
             } else if (Character.isDigit(c) || c == '(') {
                 break;
@@ -142,13 +136,54 @@ public class InputValidation extends Tokenizer {
         for (int i = input.length() - 1; i >= 0; i--) {
             char c = input.charAt(i);
             if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
-                System.out.println("Invalid input. Expression cannot end with an operator.");
+              
                 return true;
             } else if (Character.isDigit(c) || c == ')') {
                 break;
             }
         }
         return false;
+    }
+
+
+
+    //0.50
+    //11.20
+
+
+    public boolean noFirstDecimalPlace (String input){
+        for (int i = 0; i < input.length(); i++){
+            char c = input.charAt(0);
+            if (c == '.') {
+                return true;
+
+            }
+
+
+        }
+        return false;
+    }
+
+    public boolean twoDecimalPlaces(String input) {
+        int decimalCount = 0;
+        boolean decimalpoint = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == '.') {
+                if (decimalpoint){
+                    return true;
+                } 
+                decimalpoint =true;
+               
+            }else if (decimalpoint && Character.isDigit(c)){
+                decimalCount++;
+                if(decimalCount >2){
+                    return true;
+                }
+            }
+        }
+        return false; 
     }
 
 
